@@ -1,0 +1,587 @@
+/* ==========================================================================
+   1. ELEMENTAL RESONANCE DESIGN TOKENS & BASE THEME
+   Default: Celestial Gold (#f3d08a)
+   ========================================================================== */
+:root {
+  --bg-obsidian: #060811;
+  --glass-bg: rgba(14, 19, 34, 0.58);
+  --glass-bg-strong: rgba(11, 15, 28, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --text-primary: #f4f6fb;
+  --text-secondary: #9aa4bf;
+  --text-muted: #687391;
+
+  /* Active Elemental Resonance Variables (Celestial Gold Default) */
+  --accent: #f3d08a;
+  --accent-bright: #ffecb8;
+  --accent-deep: #c49a45;
+  --accent-rgb: 243, 208, 138;
+  --aurora-1: rgba(243, 208, 138, 0.17);
+  --aurora-2: rgba(99, 132, 255, 0.14);
+  --aurora-3: rgba(168, 130, 255, 0.10);
+}
+
+/* Hydro Cyan Resonance (#38bdf8) */
+[data-element="hydro"] {
+  --accent: #38bdf8;
+  --accent-bright: #bae6fd;
+  --accent-deep: #0284c7;
+  --accent-rgb: 56, 189, 248;
+  --aurora-1: rgba(56, 189, 248, 0.18);
+  --aurora-2: rgba(14, 165, 233, 0.14);
+  --aurora-3: rgba(99, 102, 241, 0.12);
+}
+
+/* Electro Violet Resonance (#c084fc) */
+[data-element="electro"] {
+  --accent: #c084fc;
+  --accent-bright: #f3e8ff;
+  --accent-deep: #9333ea;
+  --accent-rgb: 192, 132, 252;
+  --aurora-1: rgba(192, 132, 252, 0.18);
+  --aurora-2: rgba(139, 92, 246, 0.15);
+  --aurora-3: rgba(236, 72, 153, 0.11);
+}
+
+/* Anemo Emerald Resonance (#34d399) */
+[data-element="anemo"] {
+  --accent: #34d399;
+  --accent-bright: #a7f3d0;
+  --accent-deep: #059669;
+  --accent-rgb: 52, 211, 153;
+  --aurora-1: rgba(52, 211, 153, 0.17);
+  --aurora-2: rgba(45, 212, 191, 0.14);
+  --aurora-3: rgba(56, 189, 248, 0.11);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--bg-obsidian);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: clip;
+  line-height: 1.6;
+  transition: background-color 0.5s ease;
+}
+
+#socials,
+#socials.reveal-up {
+  opacity: 1;
+  transform: none;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-mono-tag {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Italicized Times New Roman quote font */
+.font-quote-serif {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   2. AMBIENT CELESTIAL AURORA MESH & FLOATING GENSHIN SVG CHARMS
+   ========================================================================== */
+.aurora-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  opacity: 0.9;
+  transition: background 0.8s ease;
+  will-change: transform;
+}
+
+.aurora-blob-1 {
+  width: 55vw;
+  height: 55vw;
+  max-width: 720px;
+  max-height: 720px;
+  top: -15%;
+  left: 12%;
+  background: radial-gradient(circle, var(--aurora-1) 0%, transparent 70%);
+  animation: auroraDrift1 18s ease-in-out infinite alternate;
+}
+
+.aurora-blob-2 {
+  width: 50vw;
+  height: 50vw;
+  max-width: 650px;
+  max-height: 650px;
+  top: 32%;
+  right: -10%;
+  background: radial-gradient(circle, var(--aurora-2) 0%, transparent 70%);
+  animation: auroraDrift2 22s ease-in-out infinite alternate;
+}
+
+.aurora-blob-3 {
+  width: 55vw;
+  height: 55vw;
+  max-width: 700px;
+  max-height: 700px;
+  bottom: -15%;
+  left: -8%;
+  background: radial-gradient(circle, var(--aurora-3) 0%, transparent 70%);
+  animation: auroraDrift3 20s ease-in-out infinite alternate;
+}
+
+@keyframes auroraDrift1 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(60px, 40px, 0) scale(1.12); }
+}
+
+@keyframes auroraDrift2 {
+  0% { transform: translate3d(0, 0, 0) scale(1.05); }
+  100% { transform: translate3d(-55px, 65px, 0) scale(0.95); }
+}
+
+@keyframes auroraDrift3 {
+  0% { transform: translate3d(0, 0, 0) scale(0.96); }
+  100% { transform: translate3d(50px, -45px, 0) scale(1.08); }
+}
+
+/* Subtle celestial grid overlay */
+.celestial-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 25%, transparent 100%);
+}
+
+/* Glossy 3D-shaded floating Genshin SVG charms */
+.floating-charm {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+  filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.6));
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.charm-float-slow {
+  animation: charmBobSlow 7.5s ease-in-out infinite;
+}
+
+.charm-float-med {
+  animation: charmBobMed 6s ease-in-out infinite;
+}
+
+.charm-float-reverse {
+  animation: charmBobReverse 8.5s ease-in-out infinite;
+}
+
+@keyframes charmBobSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+@keyframes charmBobMed {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-11px) rotate(-5deg); }
+}
+
+@keyframes charmBobReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(13px) rotate(3deg); }
+}
+
+/* ==========================================================================
+   3. GLASSMORPHIC BENTO CARDS & CURSOR-FOLLOWING SPOTLIGHT
+   ========================================================================== */
+/* ==========================================================================
+   3. GLASSMORPHIC BENTO CARDS & CURSOR-FOLLOWING SPOTLIGHT
+   ========================================================================== */
+.bento-card {
+  position: relative;
+  background: rgba(14, 19, 34, 0.78);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 45px -15px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+/* Cursor-following radial spotlight glow */
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    460px circle at var(--mouse-x) var(--mouse-y),
+    rgba(var(--accent-rgb), 0.16),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Luminous border spotlight ring (only masked on hover to save GPU layers) */
+.bento-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    320px circle at var(--mouse-x) var(--mouse-y),
+    rgba(var(--accent-rgb), 0.7),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bento-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.36);
+  box-shadow:
+    0 26px 55px -15px rgba(0, 0, 0, 0.75),
+    0 0 32px -8px rgba(var(--accent-rgb), 0.24),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+}
+
+.bento-card:hover::before {
+  opacity: 1;
+}
+
+.bento-card:hover::after {
+  opacity: 1;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.bento-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Holographic diagonal sheen sweep on hover */
+.holo-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.holo-sheen .sheen-layer {
+  position: absolute;
+  inset: -100%;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.08) 46%,
+    rgba(var(--accent-rgb), 0.22) 50%,
+    rgba(255, 255, 255, 0.08) 54%,
+    transparent 62%
+  );
+  transform: translateX(-65%) translateY(-10%);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.holo-sheen:hover .sheen-layer {
+  transform: translateX(65%) translateY(10%);
+}
+
+/* ==========================================================================
+   4. FLOATING GLASSMORPHIC TOP NAVBAR & SLIDING ACTIVE PILL
+   ========================================================================== */
+.floating-nav {
+  background: rgba(10, 14, 26, 0.76);
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 16px 40px -10px rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.nav-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  border-radius: 9999px;
+  background: rgba(var(--accent-rgb), 0.17);
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.22);
+  transition:
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease,
+    border-color 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, width;
+}
+
+.nav-link {
+  position: relative;
+  z-index: 1;
+  transition: color 0.25s ease;
+  user-select: none;
+}
+
+.nav-link.active {
+  color: var(--accent-bright);
+}
+
+/* Elemental Switcher Buttons */
+.element-btn {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+
+.element-btn:hover {
+  transform: scale(1.16);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.element-btn.active {
+  border-color: var(--accent-bright);
+  background: rgba(var(--accent-rgb), 0.18);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.45);
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   5. INTERACTIVE ACCENT UTILITIES, STAR SHIMMER & SCROLL REVEAL
+   ========================================================================== */
+.accent-text {
+  color: var(--accent);
+  transition: color 0.4s ease;
+}
+
+.accent-bright-text {
+  color: var(--accent-bright);
+  transition: color 0.4s ease;
+}
+
+.accent-gradient-text {
+  background: linear-gradient(135deg, #ffffff 15%, var(--accent-bright) 58%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.star-twinkle {
+  animation: starPulse 2.8s ease-in-out infinite;
+}
+
+.star-twinkle:nth-child(2) { animation-delay: 0.35s; }
+.star-twinkle:nth-child(3) { animation-delay: 0.7s; }
+.star-twinkle:nth-child(4) { animation-delay: 1.05s; }
+.star-twinkle:nth-child(5) { animation-delay: 1.4s; }
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(var(--accent-rgb), 0.45)); }
+  50% { transform: scale(1.22); filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.95)); }
+}
+
+/* Skill proficiency bar animation */
+.skill-bar-fill {
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent), var(--accent-bright));
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
+  transition: width 1.15s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+}
+
+.bento-card:hover .skill-bar-fill {
+  filter: brightness(1.18);
+}
+
+/* Shimmering Primary Button */
+.btn-celestial {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.22), rgba(var(--accent-rgb), 0.08));
+  border: 1px solid rgba(var(--accent-rgb), 0.5);
+  color: var(--accent-bright);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+.btn-celestial::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-22deg);
+  transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn-celestial:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: var(--accent-bright);
+  box-shadow: 0 10px 28px -6px rgba(var(--accent-rgb), 0.45);
+}
+
+.btn-celestial:hover::after {
+  left: 150%;
+}
+
+.btn-celestial:active {
+  transform: scale(0.97);
+}
+
+/* Social Platform Tiles */
+.social-tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.social-tile:hover {
+  border-color: rgba(var(--accent-rgb), 0.55);
+  background: rgba(var(--accent-rgb), 0.07);
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px -6px rgba(var(--accent-rgb), 0.25);
+}
+
+/* Smooth Scroll Reveal for Content Cards */
+.reveal-up {
+  opacity: 1;
+  transform: none;
+}
+
+#socials {
+  position: relative;
+  z-index: 20;
+  transform: translateZ(0);
+}
+
+/* Work Card Filtering Transitions */
+.filter-pill.active-filter {
+  background: rgba(var(--accent-rgb), 0.18);
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  color: var(--accent-bright);
+  box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.2);
+}
+
+.work-item {
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.4s ease;
+}
+
+.work-item.is-hidden {
+  display: none;
+}
+
+/* Glassmorphic Modal */
+#project-modal {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#project-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#project-modal-panel {
+  transform: translateY(18px) scale(0.96);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#project-modal.open #project-modal-panel {
+  transform: translateY(0) scale(1);
+}
+
+/* Floating Toast Notification */
+#toast-notification {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translate(-50%, 24px) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 60;
+  transition:
+    opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#toast-notification.show {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+/* Star-burst particle pop on Copy Handle click */
+.burst-star {
+  position: fixed;
+  pointer-events: none;
+  z-index: 70;
+  animation: starBurstPop 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes starBurstPop {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.25) rotate(160deg);
+  }
+}

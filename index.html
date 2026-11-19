@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jerome F. Hernandez (Jommfh) — Creative &amp; Tech Portfolio</title>
+
+  <!-- Tailwind CSS for responsive layout & utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Plus Jakarta Sans, Space Grotesk & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style1.css" />
+
+  <!-- Genshin Wish Showcase & Slide Reveal Animations -->
+  <style>
+    .genshin-wish-btn {
+      position: relative;
+      background: linear-gradient(135deg, #fcf6e8 0%, #f1dfb9 100%);
+      color: #3a3022;
+      border: 1px solid #fff8e7;
+      box-shadow:
+        inset 0 0 0 2px rgba(178, 138, 68, 0.45),
+        0 10px 28px -6px rgba(243, 208, 138, 0.45);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, filter 0.25s ease;
+      overflow: hidden;
+    }
+
+    .genshin-wish-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+      transform: skewX(-22deg);
+      transition: left 0.6s ease;
+    }
+
+    .genshin-wish-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        inset 0 0 0 2px rgba(178, 138, 68, 0.65),
+        0 14px 32px -4px rgba(243, 208, 138, 0.65);
+      filter: brightness(1.03);
+    }
+
+    .genshin-wish-btn:hover::before {
+      left: 150%;
+    }
+
+    .genshin-wish-btn:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes wishMeteorSlide {
+      0% {
+        transform: translateX(-120%) skewX(-24deg);
+        opacity: 0;
+      }
+      25% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(220%) skewX(-24deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes wishFlashBurst {
+      0% {
+        opacity: 0.9;
+        transform: scale(0.85);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.35);
+      }
+    }
+
+    @keyframes sampleSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(48px) scale(0.96);
+        filter: brightness(1.45);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: brightness(1);
+      }
+    }
+
+    .wish-meteor-active {
+      animation: wishMeteorSlide 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .wish-flash-active {
+      animation: wishFlashBurst 0.65s ease-out forwards;
+    }
+
+    .sample-slide-enter {
+      animation: sampleSlideIn 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+  </style>
+</head>
+
+<body data-element="gold" class="antialiased selection:bg-white/20 selection:text-white">
+
+  <!-- ==========================================================================
+       AMBIENT CELESTIAL BACKGROUND LAYERS (Aurora + Grid + Interactive Canvas)
+       ========================================================================== -->
+  <div class="aurora-layer" aria-hidden="true">
+    <div class="aurora-blob aurora-blob-1"></div>
+    <div class="aurora-blob aurora-blob-2"></div>
+    <div class="aurora-blob aurora-blob-3"></div>
+  </div>
+  <div class="celestial-grid" aria-hidden="true"></div>
+  <canvas id="celestial-canvas" class="fixed inset-0 z-[1] pointer-events-none" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================================
+       4 GLOSSY 3D-SHADED FLOATING GENSHIN SVG CHARMS (Mouse-Parallax Depth)
+       ========================================================================== -->
+  <div aria-hidden="true">
+    <!-- Charm 1: Glowing 4-Point Primogem Star (Top Left) -->
+    <div class="floating-charm hidden sm:block top-24 left-[4%] lg:left-[7%]" data-parallax="0.032">
+      <svg class="w-14 h-14 lg:w-16 lg:h-16 charm-float-slow" viewBox="0 0 80 80" fill="none">
+        <defs>
+          <linearGradient id="primoGrad1" x1="10" y1="10" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="40%" stop-color="#ffe8a3" />
+            <stop offset="75%" stop-color="#93c5fd" />
+            <stop offset="100%" stop-color="#c084fc" />
+          </linearGradient>
+          <linearGradient id="primoFacet" x1="40" y1="6" x2="40" y2="74" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#1e293b" stop-opacity="0.35" />
+          </linearGradient>
+        </defs>
+        <path d="M40 4L49.5 30.5L76 40L49.5 49.5L40 76L30.5 49.5L4 40L30.5 30.5L40 4Z" fill="url(#primoGrad1)" />
+        <path d="M40 4L49.5 30.5L40 40V4Z" fill="#ffffff" fill-opacity="0.65" />
+        <path d="M40 40L76 40L49.5 49.5L40 40Z" fill="#1e1b4b" fill-opacity="0.28" />
+        <path d="M40 40L30.5 49.5L40 76V40Z" fill="url(#primoFacet)" />
+        <circle cx="40" cy="40" r="5" fill="#ffffff" fill-opacity="0.85" />
+      </svg>
+    </div>
+
+    <!-- Charm 2: Celestial Vision Emblem (Top Right) -->
+    <div class="floating-charm hidden md:block top-36 right-[5%] lg:right-[8%]" data-parallax="-0.028">
+      <svg class="w-16 h-16 lg:w-20 lg:h-20 charm-float-med" viewBox="0 0 90 90" fill="none">
+        <defs>
+          <linearGradient id="visionRimGrad" x1="16" y1="14" x2="74" y2="76" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fef3c7" />
+            <stop offset="50%" stop-color="#e5c37a" />
+            <stop offset="100%" stop-color="#926c29" />
+          </linearGradient>
+          <radialGradient id="visionCoreGrad" cx="38%" cy="32%" r="68%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="45%" stop-color="#7dd3fc" />
+            <stop offset="100%" stop-color="#2563eb" />
+          </radialGradient>
+        </defs>
+        <polygon points="45,8 76,45 45,82 14,45" stroke="url(#visionRimGrad)" stroke-width="2.2" fill="rgba(15,23,42,0.45)" />
+        <circle cx="45" cy="45" r="24" stroke="url(#visionRimGrad)" stroke-width="2.5" fill="rgba(6,8,17,0.6)" />
+        <circle cx="45" cy="45" r="16" fill="url(#visionCoreGrad)" />
+        <path d="M45 33L48 42L57 45L48 48L45 57L42 48L33 45L42 42L45 33Z" fill="#ffffff" fill-opacity="0.92" />
+      </svg>
+    </div>
+
+    <!-- Charm 3: Intertwined Fate Orb (Middle Left) -->
+    <div class="floating-charm hidden lg:block top-[52%] left-[3%]" data-parallax="0.04">
+      <svg class="w-16 h-16 charm-float-reverse" viewBox="0 0 84 84" fill="none">
+        <defs>
+          <radialGradient id="fateSphereGrad" cx="35%" cy="30%" r="68%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="45%" stop-color="#f0abfc" />
+            <stop offset="80%" stop-color="#60a5fa" />
+            <stop offset="100%" stop-color="#312e81" />
+          </radialGradient>
+        </defs>
+        <ellipse cx="42" cy="42" rx="34" ry="13" transform="rotate(-28 42 42)" stroke="rgba(255,230,163,0.65)" stroke-width="1.5" />
+        <ellipse cx="42" cy="42" rx="34" ry="13" transform="rotate(28 42 42)" stroke="rgba(186,230,253,0.55)" stroke-width="1.3" />
+        <circle cx="42" cy="42" r="18" fill="url(#fateSphereGrad)" />
+        <path d="M42 29L44.8 39.2L55 42L44.8 44.8L42 55L39.2 44.8L29 42L39.2 39.2L42 29Z" fill="#ffffff" fill-opacity="0.9" />
+      </svg>
+    </div>
+
+    <!-- Charm 4: Celestial Astrolabe Compass (Lower Right) -->
+    <div class="floating-charm hidden sm:block bottom-28 right-[5%] lg:right-[9%]" data-parallax="-0.035">
+      <svg class="w-20 h-20 charm-float-slow" viewBox="0 0 96 96" fill="none">
+        <defs>
+          <linearGradient id="compassGold" x1="16" y1="16" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fffbeb" />
+            <stop offset="50%" stop-color="#e5c37a" />
+            <stop offset="100%" stop-color="#926c29" />
+          </linearGradient>
+        </defs>
+        <circle cx="48" cy="48" r="34" stroke="url(#compassGold)" stroke-width="1.6" />
+        <circle cx="48" cy="48" r="24" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-dasharray="4 3" />
+        <path d="M48 10L53 43L86 48L53 53L48 86L43 53L10 48L43 43L48 10Z" fill="url(#compassGold)" />
+        <circle cx="48" cy="48" r="6" fill="#060811" stroke="#ffe6a3" stroke-width="2" />
+        <circle cx="48" cy="48" r="2.2" fill="#ffffff" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING GLASSMORPHIC STICKY TOP PILL NAVBAR
+       ========================================================================== -->
+  <header class="sticky top-4 z-40 px-3 sm:px-6 pt-3">
+    <div class="floating-nav max-w-5xl mx-auto rounded-full px-3 sm:px-5 py-2 flex items-center justify-between gap-2">
+
+      <!-- Left: Brand Logo -->
+      <a href="#about" id="brand-logo-link" class="flex items-center gap-2.5 pl-1 group shrink-0">
+        <div class="relative w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-500 group-hover:rotate-90">
+          <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="navStarGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="50%" stop-color="#ffecb8" />
+                <stop offset="100%" stop-color="#f3d08a" />
+              </linearGradient>
+            </defs>
+            <path d="M16 2L19.8 12.2L30 16L19.8 19.8L16 30L12.2 19.8L2 16L12.2 12.2L16 2Z" fill="url(#navStarGrad)" />
+          </svg>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="font-display font-bold text-base sm:text-lg tracking-tight accent-gradient-text">
+            Jommfh
+          </span>
+          <span class="hidden lg:inline-block font-mono-tag text-[11px] text-[#9aa4bf]">
+            @appledrumstick
+          </span>
+        </div>
+      </a>
+
+      <!-- Center: 4 Smooth-Sliding Pill Tabs -->
+      <nav aria-label="Primary Navigation" id="nav-menu" class="relative hidden md:flex items-center bg-white/[0.03] border border-white/[0.06] rounded-full p-1">
+        <div id="nav-indicator" class="nav-indicator"></div>
+        <a href="#about" data-nav="about" class="nav-link active px-4 py-1.5 text-xs font-semibold text-[#f4f6fb] rounded-full">
+          About me
+        </a>
+        <a href="#skills" data-nav="skills" class="nav-link px-4 py-1.5 text-xs font-semibold text-[#9aa4bf] hover:text-white rounded-full">
+          Where I'm best at
+        </a>
+        <a href="#works" data-nav="works" class="nav-link px-4 py-1.5 text-xs font-semibold text-[#9aa4bf] hover:text-white rounded-full">
+          My works
+        </a>
+        <a href="#socials" data-nav="socials" class="nav-link px-4 py-1.5 text-xs font-semibold text-[#9aa4bf] hover:text-white rounded-full">
+          My Socials
+        </a>
+      </nav>
+
+      <!-- Right: Elemental Resonance Theme Switcher -->
+      <div class="flex items-center gap-1 bg-white/[0.03] border border-white/[0.07] rounded-full p-1 shrink-0" role="group" aria-label="Elemental Resonance Theme Switcher">
+        <button type="button" data-theme-btn="gold" title="Celestial Gold Resonance" aria-label="Celestial Gold Resonance" class="element-btn active text-[#f3d08a]">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" />
+          </svg>
+        </button>
+        <button type="button" data-theme-btn="hydro" title="Hydro Cyan Resonance" aria-label="Hydro Cyan Resonance" class="element-btn text-[#38bdf8]">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.5C12 2.5 5.5 9.6 5.5 14.5C5.5 18.1 8.4 21 12 21C15.6 21 18.5 18.1 18.5 14.5C18.5 9.6 12 2.5 12 2.5Z" />
+          </svg>
+        </button>
+        <button type="button" data-theme-btn="electro" title="Electro Violet Resonance" aria-label="Electro Violet Resonance" class="element-btn text-[#c084fc]">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13 2L4.5 13.5H11.5L10.5 22L19.5 10.5H12.5L13 2Z" />
+          </svg>
+        </button>
+        <button type="button" data-theme-btn="anemo" title="Anemo Emerald Resonance" aria-label="Anemo Emerald Resonance" class="element-btn text-[#34d399]">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 10H16.5C18.2 10 19.5 8.7 19.5 7C19.5 5.3 18.2 4 16.5 4C15.1 4 14 4.9 13.6 6.2" />
+            <path d="M3 14.5H18C19.7 14.5 21 15.8 21 17.5C21 19.2 19.7 20.5 18 20.5C16.6 20.5 15.5 19.6 15.1 18.3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Quick Pill Sub-Nav -->
+    <nav aria-label="Mobile Navigation" id="mobile-nav-menu" class="md:hidden mt-2 max-w-md mx-auto floating-nav rounded-full px-2 py-1 flex items-center justify-around text-[11px] font-semibold">
+      <a href="#about" data-mobile-nav="about" class="mobile-nav-link px-2.5 py-1 rounded-full text-[#ffe6a3] bg-white/10 transition-colors">About me</a>
+      <a href="#skills" data-mobile-nav="skills" class="mobile-nav-link px-2.5 py-1 rounded-full text-[#9aa4bf] hover:text-white transition-colors">Best at</a>
+      <a href="#works" data-mobile-nav="works" class="mobile-nav-link px-2.5 py-1 rounded-full text-[#9aa4bf] hover:text-white transition-colors">My works</a>
+      <a href="#socials" data-mobile-nav="socials" class="mobile-nav-link px-2.5 py-1 rounded-full text-[#9aa4bf] hover:text-white transition-colors">Socials</a>
+    </nav>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main id="main-portfolio" class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-20 space-y-24 sm:space-y-28">
+
+    <!-- ========================================================================
+         SECTION 1: HERO & ABOUT ME (MODERN BENTO GRID)
+         ======================================================================== -->
+    <section id="about" class="scroll-mt-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+        <!-- LEFT CARD: Interactive 3D-Tilt 5-Star Genshin Character Portrait Card -->
+        <div class="lg:col-span-5 reveal-up">
+          <div data-tilt class="bento-card holo-sheen h-full p-6 sm:p-7 flex flex-col items-center justify-between text-center group">
+            <div class="sheen-layer"></div>
+
+            <!-- Corner Filigree Accents -->
+            <svg class="absolute top-3.5 left-3.5 w-6 h-6 accent-text opacity-65 pointer-events-none z-10" viewBox="0 0 24 24" fill="none">
+              <path d="M2 14V2H14M2 2L9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <svg class="absolute top-3.5 right-3.5 w-6 h-6 accent-text opacity-65 pointer-events-none z-10" viewBox="0 0 24 24" fill="none">
+              <path d="M22 14V2H10M22 2L15 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <svg class="absolute bottom-3.5 left-3.5 w-6 h-6 accent-text opacity-65 pointer-events-none z-10" viewBox="0 0 24 24" fill="none">
+              <path d="M2 10V22H14M2 22L9 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <svg class="absolute bottom-3.5 right-3.5 w-6 h-6 accent-text opacity-65 pointer-events-none z-10" viewBox="0 0 24 24" fill="none">
+              <path d="M22 10V22H10M22 22L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+
+            <!-- Top Status Pill -->
+            <div class="relative z-10 w-full flex items-center justify-between text-xs mb-4 px-2">
+              <span class="font-mono-tag px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#9aa4bf]">
+                UID • 2026-IT
+              </span>
+              <span class="font-mono-tag px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 accent-bright-text">
+                ★ 5-STAR CREATOR
+              </span>
+            </div>
+
+            <!-- Fixed Portrait Frame -->
+            <div class="relative z-10 w-56 h-56 sm:w-60 sm:h-60 rounded-[22px] p-1.5 bg-gradient-to-b from-white/25 via-white/5 to-transparent border border-white/15 shadow-2xl overflow-hidden group/avatar">
+              <div class="relative w-full h-full rounded-[17px] bg-[#0a0f1f] overflow-hidden flex items-center justify-center">
+                <img
+                  src="heelo.jpg"
+                  alt="Jerome F. Hernandez Portrait"
+                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover/avatar:scale-105"
+                />
+              </div>
+            </div>
+
+            <!-- 5 Glowing Animated Stars + BSIT 1-F3 Pill -->
+            <div class="relative z-10 mt-5 space-y-3 w-full">
+              <div class="flex items-center justify-center gap-1.5" aria-label="5 Star Rating">
+                <svg class="w-5 h-5 star-twinkle accent-bright-text" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></svg>
+                <svg class="w-5 h-5 star-twinkle accent-bright-text" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></svg>
+                <svg class="w-5 h-5 star-twinkle accent-bright-text" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></svg>
+                <svg class="w-5 h-5 star-twinkle accent-bright-text" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></svg>
+                <svg class="w-5 h-5 star-twinkle accent-bright-text" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/></svg>
+              </div>
+
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-mono-tag text-xs font-medium text-[#f4f6fb]">
+                  BSIT 1-F3 • MinSU Calapan
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Main Intro Card + 2x2 Interactive Stat/Highlight Bento Tiles -->
+        <div class="lg:col-span-7 flex flex-col gap-5">
+
+          <!-- Main Intro Card -->
+          <div class="bento-card p-6 sm:p-8 reveal-up" style="transition-delay: 90ms;">
+            <div class="relative z-10 space-y-4">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <span class="font-mono-tag text-xs px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 accent-bright-text">
+                  ✦ Jommfh
+                </span>
+                <span class="font-mono-tag text-xs px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#9aa4bf]">
+                  @appledrumstick
+                </span>
+              </div>
+
+              <h1 class="font-display text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.15] accent-gradient-text">
+                Jerome F. Hernandez
+              </h1>
+
+              <p class="text-sm sm:text-base text-[#cbd5e1] leading-relaxed">
+                1st-year <strong class="text-white font-semibold">BSIT (Section 1-F3)</strong> student at <strong class="text-white font-semibold">Mindoro State University (MinSU) – Calapan City Campus</strong>, <strong class="text-white font-semibold">Apitong National High School STEM</strong> graduate &amp; former <strong class="text-white font-semibold">SSLG Public Information Officer</strong>, and multimedia user operating under <span class="font-mono-tag accent-bright-text text-xs sm:text-sm">@appledrumstick</span>.
+              </p>
+
+              <div class="pt-1 flex flex-wrap items-center gap-3">
+                <a href="#works" data-jump="works" class="btn-celestial px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-2">
+                  <span>Explore My Works</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+                <a href="#socials" data-jump="socials" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-[#f4f6fb] bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-white/25 transition-all duration-300">
+                  Commission / Contact
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2x2 Mini Interactive Stat / Highlight Bento Tiles -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+
+            <!-- Tile 1: Education -->
+            <div data-tilt class="bento-card bento-lift p-5 reveal-up group" style="transition-delay: 140ms;">
+              <div class="relative z-10 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center shrink-0 accent-bright-text transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-mono-tag text-[11px] uppercase tracking-wider text-[#9aa4bf]">Education</span>
+                  <h2 class="text-sm sm:text-base font-bold text-white mt-0.5">MinSU Calapan</h2>
+                  <p class="font-mono-tag text-xs accent-text mt-0.5">1st-Year BSIT • 1-F3</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tile 2: Background -->
+            <div data-tilt class="bento-card bento-lift p-5 reveal-up group" style="transition-delay: 190ms;">
+              <div class="relative z-10 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center shrink-0 accent-bright-text transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-mono-tag text-[11px] uppercase tracking-wider text-[#9aa4bf]">Background</span>
+                  <h2 class="text-sm sm:text-base font-bold text-white mt-0.5">Apitong NHS STEM</h2>
+                  <p class="font-mono-tag text-xs accent-text mt-0.5">Former SSLG PIO</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tile 3: Recognition -->
+            <div data-tilt class="bento-card bento-lift p-5 reveal-up group" style="transition-delay: 240ms;">
+              <div class="relative z-10 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center shrink-0 accent-bright-text transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-mono-tag text-[11px] uppercase tracking-wider text-[#9aa4bf]">Recognition</span>
+                  <h2 class="text-sm sm:text-base font-bold text-white mt-0.5">I can assure you a good work</h2>
+                  <p class="font-mono-tag text-xs accent-text mt-0.5">Pubmat Designs, Video Editing</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tile 4: Freelance Identity -->
+            <div data-tilt class="bento-card bento-lift p-5 reveal-up group" style="transition-delay: 290ms;">
+              <div class="relative z-10 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center shrink-0 accent-bright-text transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-mono-tag text-[11px] uppercase tracking-wider text-[#9aa4bf]">Multimedia Studio</span>
+                  <h2 class="text-sm sm:text-base font-bold text-white mt-0.5">@appledrumstick</h2>
+                  <p class="font-mono-tag text-xs accent-text mt-0.5">Design × Motion × Web</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 2: WHERE I'M BEST AT (SKILLS & TOOLS BENTO GRID)
+         ======================================================================== -->
+    <section id="skills" class="scroll-mt-28">
+      <div class="text-center max-w-2xl mx-auto mb-10 reveal-up">
+        <span class="font-mono-tag text-xs uppercase tracking-[0.25em] accent-text">
+          ✦ Talents &amp; Creative Stack
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">
+          Where I'm best at
+        </h2>
+        <!-- Celestial Quote Card with Italicized Times New Roman -->
+        <div class="mt-4 inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-white/[0.035] border border-white/[0.1] shadow-[0_0_25px_rgba(var(--accent-rgb),0.12)]">
+          <span class="accent-text text-xs" aria-hidden="true">✦</span>
+          <p class="font-quote-serif text-lg sm:text-xl accent-bright-text tracking-wide">
+            “the jack of all trades master of none”
+          </p>
+          <span class="accent-text text-xs" aria-hidden="true">✦</span>
+        </div>
+      </div>
+
+      <!-- 6 Interactive Skill Cards Bento Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Skill 1: Adobe Photoshop -->
+        <article class="bento-card bento-lift holo-sheen p-6 reveal-up group" data-skill-level="95">
+          <div class="sheen-layer"></div>
+          <div class="relative z-10 flex flex-col h-full justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#001e36] to-[#00335c] border border-[#31a8ff]/40 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <span class="font-display font-bold text-base text-[#31a8ff]">Ps</span>
+                </div>
+                <span class="font-mono-tag text-xs text-[#9aa4bf] group-hover:text-white transition-colors">95%</span>
+              </div>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Adobe Photoshop</h3>
+                <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1">
+                  Pubmats, Photo Manipulation &amp; Compositing
+                </p>
+              </div>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+              <div class="skill-bar-fill h-full rounded-full" style="--target-width: 95%;"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Skill 2: Adobe Illustrator -->
+        <article class="bento-card bento-lift holo-sheen p-6 reveal-up group" style="transition-delay: 60ms;" data-skill-level="45">
+          <div class="sheen-layer"></div>
+          <div class="relative z-10 flex flex-col h-full justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#330000] to-[#591c00] border border-[#ff9a00]/40 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                  <span class="font-display font-bold text-base text-[#ff9a00]">Ai</span>
+                </div>
+                <span class="font-mono-tag text-xs text-[#9aa4bf] group-hover:text-white transition-colors">45%</span>
+              </div>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Adobe Illustrator</h3>
+                <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1">
+                  Logos, Institutional Seals &amp; Vector Assets
+                </p>
+              </div>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+              <div class="skill-bar-fill h-full rounded-full" style="--target-width: 45%;"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Skill 3: Adobe Premiere Pro -->
+        <article class="bento-card bento-lift holo-sheen p-6 reveal-up group" style="transition-delay: 120ms;" data-skill-level="75">
+          <div class="sheen-layer"></div>
+          <div class="relative z-10 flex flex-col h-full justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1b0033] to-[#34005e] border border-[#9999ff]/40 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <span class="font-display font-bold text-base text-[#b3b3ff]">Pr</span>
+                </div>
+                <span class="font-mono-tag text-xs text-[#9aa4bf] group-hover:text-white transition-colors">75%</span>
+              </div>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Adobe Premiere Pro</h3>
+                <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1">
+                  Narrative &amp; Event Video Editing
+                </p>
+              </div>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+              <div class="skill-bar-fill h-full rounded-full" style="--target-width: 75%;"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Skill 4: Adobe After Effects -->
+        <article class="bento-card bento-lift holo-sheen p-6 reveal-up group" style="transition-delay: 180ms;" data-skill-level="85">
+          <div class="sheen-layer"></div>
+          <div class="relative z-10 flex flex-col h-full justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#14002b] to-[#2c0059] border border-[#cf9fff]/40 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                  <span class="font-display font-bold text-base text-[#d8b4fe]">Ae</span>
+                </div>
+                <span class="font-mono-tag text-xs text-[#9aa4bf] group-hover:text-white transition-colors">85%</span>
+              </div>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Adobe After Effects</h3>
+                <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1">
+                  Motion Graphics, Keyframes &amp; VFX
+                </p>
+              </div>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+              <div class="skill-bar-fill h-full rounded-full" style="--target-width: 85%;"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Skill 5: CapCut -->
+        <article class="bento-card bento-lift holo-sheen p-6 reveal-up group" style="transition-delay: 240ms;" data-skill-level="80">
+          <div class="sheen-layer"></div>
+          <div class="relative z-10 flex flex-col h-full justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#141824] to-[#262d42] border border-white/25 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 7l16 10M20 7L4 17M4 7v10M20 7v10" />
+                  </svg>
+                </div>
+                <span class="font-mono-tag text-xs text-[#9aa4bf] group-hover:text-white transition-colors">80%</span>
+              </div>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">CapCut</h3>
+                <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1">
+                  Fast-Turnaround Social &amp; Reels Editing
+                </p>
+              </div>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+              <div class="skill-bar-fill h-full rounded-full" style="--target-width: 80%;"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Skill 6: Web & IT Foundations -->
+        <article class="bento-card bento-lift holo-sheen p-6 reveal-up group" style="transition-delay: 300ms;" data-skill-level="50">
+          <div class="sheen-layer"></div>
+          <div class="relative z-10 flex flex-col h-full justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0b192c] to-[#132f52] border border-emerald-400/35 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                  <span class="font-mono-tag font-bold text-sm text-emerald-300">&lt;/&gt;</span>
+                </div>
+                <span class="font-mono-tag text-xs text-[#9aa4bf] group-hover:text-white transition-colors">50%</span>
+              </div>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Web &amp; IT Foundations</h3>
+                <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1">
+                  HTML/CSS, C, C#, Networking &amp; Roboflow ML
+                </p>
+              </div>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+              <div class="skill-bar-fill h-full rounded-full" style="--target-width: 50%;"></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 3: MY WORKS (INTERACTIVE FILTERABLE SHOWCASE + MODAL)
+         ======================================================================== -->
+    <section id="works" class="scroll-mt-28">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 reveal-up">
+        <div>
+          <span class="font-mono-tag text-xs uppercase tracking-[0.25em] accent-text">
+            ✦ Constellation Archive
+          </span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">
+            My works
+          </h2>
+          <p class="text-sm text-[#9aa4bf] mt-1.5 max-w-lg">
+            Click any card to inspect project details, tools used, and make a Wish to reveal sample work.
+          </p>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="inline-flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-white/[0.03] border border-white/[0.08] self-start" role="tablist" aria-label="Filter projects by category">
+          <button type="button" data-filter="all" class="filter-pill active-filter px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 text-white cursor-pointer">
+            All Works
+          </button>
+          <button type="button" data-filter="graphic" class="filter-pill px-4 py-1.5 rounded-full text-xs font-semibold text-[#9aa4bf] hover:text-white transition-all duration-300 cursor-pointer">
+            Graphic Design
+          </button>
+          <button type="button" data-filter="video" class="filter-pill px-4 py-1.5 rounded-full text-xs font-semibold text-[#9aa4bf] hover:text-white transition-all duration-300 cursor-pointer">
+            Video &amp; Motion
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Interactive Creative Project Cards -->
+      <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Work 1: Pubmats & Social Media Graphics -->
+        <article data-tilt data-category="graphic" data-project-id="0" tabindex="0" role="button" aria-label="Inspect Pubmats & Social Media Graphics" class="work-item bento-card holo-sheen cursor-pointer group flex flex-col justify-between reveal-up">
+          <div class="sheen-layer"></div>
+          <div class="relative h-44 w-full overflow-hidden bg-gradient-to-br from-[#131c36] via-[#0e1529] to-[#1e1b4b] border-b border-white/[0.07]">
+            <svg class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110" viewBox="0 0 360 180" fill="none">
+              <circle cx="290" cy="40" r="75" fill="rgba(56,189,248,0.16)" />
+              <circle cx="70" cy="150" r="65" fill="rgba(229,195,122,0.14)" />
+              <rect x="64" y="26" width="110" height="132" rx="12" transform="rotate(-6 64 26)" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.18)" />
+              <rect x="135" y="20" width="116" height="138" rx="14" fill="#0f172a" stroke="rgba(229,195,122,0.55)" stroke-width="1.4" />
+              <rect x="147" y="32" width="92" height="58" rx="8" fill="url(#work1Grad)" />
+              <defs>
+                <linearGradient id="work1Grad" x1="147" y1="32" x2="239" y2="90" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="100%" stop-color="#818cf8" />
+                </linearGradient>
+              </defs>
+              <path d="M193 45L196 54L205 57L196 60L193 69L190 60L181 57L190 54L193 45Z" fill="#ffffff" />
+              <rect x="147" y="100" width="66" height="7" rx="3.5" fill="#f8fafc" fill-opacity="0.85" />
+              <rect x="147" y="113" width="84" height="5" rx="2.5" fill="#94a3b8" fill-opacity="0.6" />
+              <rect x="147" y="124" width="52" height="5" rx="2.5" fill="#e5c37a" fill-opacity="0.8" />
+            </svg>
+            <span class="absolute top-3.5 left-3.5 font-mono-tag text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#060811]/75 backdrop-blur-md border border-white/10 text-white">
+              Graphic Design
+            </span>
+          </div>
+
+          <div class="relative z-10 p-6 flex-1 flex flex-col justify-between gap-4">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white group-hover:text-[var(--accent-bright)] transition-colors">
+                Pubmats &amp; Social Media Graphics
+              </h3>
+              <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1.5">
+                BSIT 1-F3 &amp; Brand Campaigns
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/[0.06]">
+              <span class="font-mono-tag text-[11px] text-[#9aa4bf]">Ps • Ai</span>
+              <span class="inline-flex items-center gap-1 text-xs font-semibold accent-bright-text opacity-80 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+                <span>Inspect Project</span>
+                <span aria-hidden="true">↗</span>
+              </span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Work 2: Event Certificates & Tarpaulins -->
+        <article data-tilt data-category="graphic" data-project-id="1" tabindex="0" role="button" aria-label="Inspect Event Certificates & Tarpaulins" class="work-item bento-card holo-sheen cursor-pointer group flex flex-col justify-between reveal-up" style="transition-delay: 70ms;">
+          <div class="sheen-layer"></div>
+          <div class="relative h-44 w-full overflow-hidden bg-gradient-to-br from-[#0e1e2b] via-[#131629] to-[#271c19] border-b border-white/[0.07]">
+            <svg class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110" viewBox="0 0 360 180" fill="none">
+              <circle cx="95" cy="45" r="70" fill="rgba(52,211,153,0.14)" />
+              <circle cx="275" cy="135" r="70" fill="rgba(229,195,122,0.16)" />
+              <rect x="52" y="30" width="256" height="120" rx="14" fill="#0f172a" stroke="#e5c37a" stroke-width="1.4" />
+              <circle cx="64" cy="42" r="3" fill="#e5c37a" />
+              <circle cx="296" cy="42" r="3" fill="#e5c37a" />
+              <circle cx="64" cy="138" r="3" fill="#e5c37a" />
+              <circle cx="296" cy="138" r="3" fill="#e5c37a" />
+              <polygon points="180,52 222,70 180,88 138,70" fill="#e5c37a" />
+              <path d="M156 80V98C156 105 204 105 204 98V80" stroke="#ffe6a3" stroke-width="2" fill="rgba(229,195,122,0.15)" />
+              <line x1="222" y1="70" x2="222" y2="96" stroke="#ffe6a3" stroke-width="2" />
+              <rect x="125" y="116" width="110" height="7" rx="3.5" fill="rgba(255,255,255,0.85)" />
+            </svg>
+            <span class="absolute top-3.5 left-3.5 font-mono-tag text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#060811]/75 backdrop-blur-md border border-white/10 text-white">
+              Graphic Design
+            </span>
+          </div>
+
+          <div class="relative z-10 p-6 flex-1 flex flex-col justify-between gap-4">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white group-hover:text-[var(--accent-bright)] transition-colors">
+                Event Certificates &amp; Tarpaulins
+              </h3>
+              <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1.5">
+                Custom Large-Format Print Layouts
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/[0.06]">
+              <span class="font-mono-tag text-[11px] text-[#9aa4bf]">Print • High-DPI</span>
+              <span class="inline-flex items-center gap-1 text-xs font-semibold accent-bright-text opacity-80 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+                <span>Inspect Project</span>
+                <span aria-hidden="true">↗</span>
+              </span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Work 3: Logo & Institutional Seal Design -->
+        <article data-tilt data-category="graphic" data-project-id="2" tabindex="0" role="button" aria-label="Inspect Logo & Institutional Seal Design" class="work-item bento-card holo-sheen cursor-pointer group flex flex-col justify-between reveal-up" style="transition-delay: 140ms;">
+          <div class="sheen-layer"></div>
+          <div class="relative h-44 w-full overflow-hidden bg-gradient-to-br from-[#1e1726] via-[#131629] to-[#271c19] border-b border-white/[0.07]">
+            <svg class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110" viewBox="0 0 360 180" fill="none">
+              <circle cx="180" cy="90" r="80" fill="rgba(229,195,122,0.15)" />
+              <circle cx="180" cy="90" r="56" stroke="#e5c37a" stroke-width="1.8" fill="#0d111e" />
+              <circle cx="180" cy="90" r="46" stroke="rgba(229,195,122,0.45)" stroke-width="1" stroke-dasharray="4 3" />
+              <polygon points="180,50 212,90 180,130 148,90" stroke="#ffe6a3" stroke-width="1.5" fill="rgba(229,195,122,0.12)" />
+              <path d="M180 62L185 83L206 88L185 93L180 114L175 93L154 88L175 83L180 62Z" fill="#ffe6a3" />
+              <line x1="126" y1="50" x2="234" y2="50" stroke="rgba(56,189,248,0.45)" stroke-width="1" />
+              <rect x="177" y="47" width="6" height="6" fill="#38bdf8" />
+            </svg>
+            <span class="absolute top-3.5 left-3.5 font-mono-tag text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#060811]/75 backdrop-blur-md border border-white/10 text-white">
+              Graphic Design
+            </span>
+          </div>
+
+          <div class="relative z-10 p-6 flex-1 flex flex-col justify-between gap-4">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white group-hover:text-[var(--accent-bright)] transition-colors">
+                Logo &amp; Institutional Seal Design
+              </h3>
+              <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1.5">
+                Vector Identity &amp; Symbolic Branding
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/[0.06]">
+              <span class="font-mono-tag text-[11px] text-[#9aa4bf]">Illustrator • SVG</span>
+              <span class="inline-flex items-center gap-1 text-xs font-semibold accent-bright-text opacity-80 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+                <span>Inspect Project</span>
+                <span aria-hidden="true">↗</span>
+              </span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Work 4: Video Editing & Motion Highlights -->
+        <article data-tilt data-category="video" data-project-id="3" tabindex="0" role="button" aria-label="Inspect Video Editing & Motion Highlights" class="work-item bento-card holo-sheen cursor-pointer group flex flex-col justify-between reveal-up" style="transition-delay: 210ms;">
+          <div class="sheen-layer"></div>
+          <div class="relative h-44 w-full overflow-hidden bg-gradient-to-br from-[#1b0f2e] via-[#131429] to-[#291338] border-b border-white/[0.07]">
+            <svg class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110" viewBox="0 0 360 180" fill="none">
+              <circle cx="180" cy="80" r="75" fill="rgba(192,132,252,0.18)" />
+              <rect x="85" y="24" width="190" height="84" rx="12" fill="#0d1120" stroke="rgba(192,132,252,0.45)" />
+              <circle cx="180" cy="66" r="20" fill="rgba(192,132,252,0.22)" stroke="#e9d5ff" stroke-width="1.5" />
+              <polygon points="175,57 190,66 175,75" fill="#ffffff" />
+              <rect x="58" y="122" width="110" height="9" rx="4.5" fill="#c084fc" fill-opacity="0.75" />
+              <rect x="174" y="122" width="128" height="9" rx="4.5" fill="#38bdf8" fill-opacity="0.7" />
+              <rect x="82" y="137" width="155" height="8" rx="4" fill="#e5c37a" fill-opacity="0.75" />
+              <line x1="180" y1="114" x2="180" y2="154" stroke="#ffffff" stroke-width="1.5" />
+            </svg>
+            <span class="absolute top-3.5 left-3.5 font-mono-tag text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#060811]/75 backdrop-blur-md border border-white/10 text-white">
+              Video &amp; Motion
+            </span>
+          </div>
+
+          <div class="relative z-10 p-6 flex-1 flex flex-col justify-between gap-4">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white group-hover:text-[var(--accent-bright)] transition-colors">
+                Video Editing &amp; Motion Highlights
+              </h3>
+              <p class="text-xs sm:text-sm text-[#9aa4bf] mt-1.5">
+                Premiere Pro, After Effects &amp; CapCut
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-white/[0.06]">
+              <span class="font-mono-tag text-[11px] text-[#9aa4bf]">Pr • Ae • CapCut</span>
+              <span class="inline-flex items-center gap-1 text-xs font-semibold accent-bright-text opacity-80 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+                <span>Inspect Project</span>
+                <span aria-hidden="true">↗</span>
+              </span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 4: MY SOCIALS
+         ======================================================================== -->
+    <section id="socials" class="scroll-mt-28">
+      <div class="bento-card p-6 sm:p-10">
+        <div class="relative z-10">
+
+          <!-- Header -->
+          <div class="text-center max-w-xl mx-auto mb-9">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 font-mono-tag text-[11px] uppercase tracking-[0.16em] accent-bright-text mb-3.5">
+              <span>✦</span>
+              <span>Connect &amp; Commissions</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
+              My Socials
+            </h2>
+            <p class="text-sm sm:text-base text-[#9aa4bf] mt-2 leading-relaxed">
+              Reach out for pubmats, event invitations, custom tarpaulins, video editing commissions, or creative collaborations.
+            </p>
+
+            <!-- One-Click Copy Handle Button -->
+            <div class="mt-5">
+              <button type="button" id="copy-handle-btn" class="btn-celestial px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-2 cursor-pointer">
+                <span>✦ Copy Handle: @appledrumstick</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Social Links Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <!-- TikTok -->
+            <a href="https://www.tiktok.com/@jommfh" target="_blank" rel="noopener noreferrer" data-magnetic class="social-tile p-5 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="font-mono-tag text-[11px] font-bold uppercase tracking-wider accent-text">TikTok</span>
+                  <span class="text-[#9aa4bf] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-sm">↗</span>
+                </div>
+                <h3 class="font-display text-base font-bold text-white">@appledrumstick</h3>
+                <p class="text-xs text-[#9aa4bf] mt-1.5 leading-relaxed">
+                  Motion edits, design showcases, templates, and creative reels.
+                </p>
+              </div>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/_andesome" target="_blank" rel="noopener noreferrer" data-magnetic class="social-tile p-5 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="font-mono-tag text-[11px] font-bold uppercase tracking-wider accent-text">Instagram</span>
+                  <span class="text-[#9aa4bf] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-sm">↗</span>
+                </div>
+                <h3 class="font-display text-base font-bold text-white">@appledrumstick</h3>
+                <p class="text-xs text-[#9aa4bf] mt-1.5 leading-relaxed">
+                  Pubmat archives, brand graphics, and direct commission DMs.
+                </p>
+              </div>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" data-magnetic class="social-tile p-5 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="font-mono-tag text-[11px] font-bold uppercase tracking-wider accent-text">Facebook</span>
+                  <span class="text-[#9aa4bf] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-sm">↗</span>
+                </div>
+                <h3 class="font-display text-base font-bold text-white">Jerome F. Hernandez</h3>
+                <p class="text-xs text-[#9aa4bf] mt-1.5 leading-relaxed">
+                  BSIT 1-F3 Section PIO updates, inquiries, and local client bookings.
+                </p>
+              </div>
+            </a>
+
+            <!-- Commission Status -->
+            <button type="button" id="commission-card-btn" data-magnetic class="social-tile p-5 flex flex-col justify-between text-left cursor-pointer group">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="font-mono-tag text-[11px] font-bold uppercase tracking-wider text-emerald-400">● Open for Commissions</span>
+                  <span class="accent-bright-text text-sm">✦</span>
+                </div>
+                <h3 class="font-display text-base font-bold text-white">Fast Turnaround</h3>
+                <p class="text-xs text-[#9aa4bf] mt-1.5 leading-relaxed">
+                  Pubmats, tarpaulins, invitations, logos, and short-form video edits.
+                </p>
+              </div>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Minimal Clean Footer -->
+  <footer class="relative z-10 border-t border-white/[0.06] py-8 px-4 sm:px-6 text-center">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#687391]">
+      <p class="font-medium text-[#9aa4bf]">
+        Jerome F. Hernandez • <span class="font-display font-bold text-white">Jommfh</span> <span class="font-mono-tag accent-text">(@appledrumstick)</span>
+      </p>
+      <a href="#about" data-jump="about" class="font-mono-tag hover:text-white transition-colors">
+        Back to top ↑
+      </a>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       GLASSMORPHIC PROJECT INSPECTION MODAL + GENSHIN WISH SAMPLE VIEWER
+       ========================================================================== -->
+  <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#04060d]/80 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="project-modal-panel" class="relative w-full max-w-4xl rounded-[26px] bg-[#0e1426]/95 border border-white/15 shadow-2xl overflow-hidden my-auto">
+      <div class="h-1.5 w-full bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent"></div>
+
+      <div class="p-6 sm:p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+
+          <!-- LEFT COLUMN: Project Info & Stack -->
+          <div class="lg:col-span-6 flex flex-col justify-between space-y-5">
+            <div class="space-y-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <span id="modal-category" class="font-mono-tag text-[11px] uppercase tracking-widest px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 accent-bright-text">
+                    Category
+                  </span>
+                  <h3 id="modal-title" class="font-display text-2xl font-bold text-white mt-3">
+                    Project Title
+                  </h3>
+                  <p id="modal-subtitle" class="text-xs font-mono-tag text-[#9aa4bf] mt-1">
+                    Subtitle
+                  </p>
+                </div>
+
+                <button type="button" id="modal-close-btn" aria-label="Close modal" class="lg:hidden w-9 h-9 rounded-full bg-white/[0.05] hover:bg-white/[0.14] border border-white/10 flex items-center justify-center text-[#9aa4bf] hover:text-white transition-all cursor-pointer shrink-0">
+                  ✕
+                </button>
+              </div>
+
+              <p id="modal-description" class="text-sm text-[#cbd5e1] leading-relaxed">
+                Detailed project description.
+              </p>
+
+              <div>
+                <span class="block font-mono-tag text-[11px] uppercase tracking-wider text-[#9aa4bf] mb-2">
+                  Tools &amp; Stack
+                </span>
+                <div id="modal-tools" class="flex flex-wrap gap-2"></div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
+              <button type="button" id="modal-dismiss-btn" class="px-4 py-2 rounded-full text-xs font-semibold text-[#9aa4bf] hover:text-white bg-white/[0.04] border border-white/10 transition-colors cursor-pointer">
+                Close
+              </button>
+              <button type="button" id="modal-request-btn" class="btn-celestial px-5 py-2.5 rounded-full text-xs font-bold inline-flex items-center gap-2 cursor-pointer">
+                <span>✦ Request Similar Work</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Genshin Wish Sample Work Showcase -->
+          <div class="lg:col-span-6 flex flex-col rounded-2xl bg-[#080c18]/90 border border-white/10 p-4 relative overflow-hidden">
+            <!-- Top Showcase Header -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="font-mono-tag text-[11px] uppercase tracking-wider accent-bright-text">✦ Sample Showcase</span>
+                <span id="wish-counter-badge" class="font-mono-tag text-[10px] px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#9aa4bf]">
+                  Locked
+                </span>
+              </div>
+              <button type="button" id="modal-close-btn-desktop" aria-label="Close modal" class="hidden lg:flex w-8 h-8 rounded-full bg-white/[0.05] hover:bg-white/[0.14] border border-white/10 items-center justify-center text-[#9aa4bf] hover:text-white transition-all cursor-pointer">
+                ✕
+              </button>
+            </div>
+
+            <!-- Interactive Viewport Stage -->
+            <div class="relative flex-1 min-h-[250px] sm:min-h-[280px] rounded-xl bg-gradient-to-br from-[#0e1529] via-[#090d1a] to-[#1a132b] border border-white/[0.08] overflow-hidden flex items-center justify-center">
+
+              <!-- Shooting-Star Wish Streak & Flash FX Overlay -->
+              <div id="wish-fx-overlay" class="pointer-events-none absolute inset-0 z-30 overflow-hidden">
+                <div id="wish-flash" class="absolute inset-0 bg-[radial-gradient(circle,rgba(255,244,204,0.85)_0%,rgba(192,132,252,0.35)_45%,transparent_75%)] opacity-0"></div>
+                <div id="wish-meteor" class="absolute top-1/2 -translate-y-1/2 left-0 w-3/4 h-28 bg-gradient-to-r from-transparent via-white to-[#ffe6a3] blur-md opacity-0"></div>
+              </div>
+
+              <!-- STATE 1: Pre-Wish Celestial Banner (Click Wish Button to Reveal) -->
+              <div id="wish-intro-state" class="relative z-10 p-6 text-center flex flex-col items-center justify-center gap-4">
+                <!-- Decorative Celestial Wish Emblem -->
+                <div class="relative w-20 h-20 flex items-center justify-center">
+                  <div class="absolute inset-0 rounded-full border border-[#f3d08a]/35 animate-spin" style="animation-duration: 14s;"></div>
+                  <div class="absolute inset-2 rounded-full border border-dashed border-sky-300/35 animate-spin" style="animation-duration: 10s; animation-direction: reverse;"></div>
+                  <svg class="w-10 h-10 accent-bright-text drop-shadow-[0_0_12px_rgba(243,208,138,0.65)]" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 2L19.8 12.2L30 16L19.8 19.8L16 30L12.2 19.8L2 16L12.2 12.2L16 2Z" fill="currentColor" />
+                  </svg>
+                </div>
+
+                <div class="space-y-1 max-w-xs">
+                  <div class="flex items-center justify-center gap-1 text-xs accent-bright-text">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <h4 class="font-display text-base font-bold text-white">
+                    Summon Sample Work
+                  </h4>
+                  <p class="text-xs text-[#9aa4bf]">
+                    Click the Wish button below to slide and reveal sample outputs from this archive.
+                  </p>
+                </div>
+
+                <!-- Genshin-Style Wish Button -->
+                <button type="button" id="wish-reveal-btn" class="genshin-wish-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-2.5 cursor-pointer">
+                  <svg class="w-4 h-4 text-[#b5832d] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 1L14.7 9.3L23 12L14.7 14.7L12 23L9.3 14.7L1 12L9.3 9.3L12 1Z" />
+                  </svg>
+                  <span>Wish • View Sample</span>
+                </button>
+              </div>
+
+              <!-- STATE 2: Revealed Sample Picture / Video Slide Viewer -->
+              <div id="wish-sample-stage" class="hidden relative z-10 w-full h-full flex flex-col justify-between">
+                <div id="sample-slide-frame" class="relative flex-1 w-full h-full flex items-center justify-center bg-[#060913] overflow-hidden">
+                  <!-- Sample Image -->
+                  <img
+                    id="sample-image"
+                    src=""
+                    alt="Sample Work Preview"
+                    class="w-full h-full max-h-[260px] object-contain transition-transform duration-300"
+                  />
+
+                  <!-- Sample Video -->
+                  <video
+                    id="sample-video"
+                    controls
+                    playsinline
+                    class="hidden w-full h-full max-h-[260px] object-contain"
+                  ></video>
+
+                  <!-- Graceful Placeholder if Image/Video File Isn't Added Yet -->
+                  <div id="sample-missing-box" class="hidden p-6 text-center flex flex-col items-center justify-center gap-2.5">
+                    <div class="w-12 h-12 rounded-2xl bg-white/[0.05] border border-white/15 flex items-center justify-center accent-bright-text">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <rect x="3" y="3" width="18" height="18" rx="3" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <path d="M21 15l-5-5L5 21" />
+                      </svg>
+                    </div>
+                    <p class="font-display text-sm font-bold text-white">Sample Slot Ready</p>
+                    <p id="sample-missing-hint" class="font-mono-tag text-[11px] text-[#9aa4bf] max-w-xs leading-relaxed">
+                      Save your file in your project folder and set its filename in projectsData.
+                    </p>
+                  </div>
+
+                  <!-- Left / Right Quick Slide Arrows -->
+                  <button type="button" id="sample-prev-btn" aria-label="Previous sample" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#060811]/80 hover:bg-[#060811] border border-white/15 text-white flex items-center justify-center transition-all cursor-pointer">
+                    ‹
+                  </button>
+                  <button type="button" id="sample-next-btn" aria-label="Next sample" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#060811]/80 hover:bg-[#060811] border border-white/15 text-white flex items-center justify-center transition-all cursor-pointer">
+                    ›
+                  </button>
+                </div>
+
+                <!-- Bottom Caption + Wish Next Controls -->
+                <div class="p-3 bg-[#0b1020]/95 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+                  <div class="min-w-0 flex-1">
+                    <p id="sample-caption" class="text-xs font-medium text-white truncate">
+                      Sample Caption
+                    </p>
+                    <div id="sample-dots" class="flex items-center gap-1.5 mt-1"></div>
+                  </div>
+
+                  <button type="button" id="wish-next-btn" class="genshin-wish-btn px-4 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shrink-0">
+                    <span>✦ Wish Next</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING GLASS TOAST NOTIFICATION
+       ========================================================================== -->
+  <div id="toast-notification" role="status" aria-live="polite">
+    <div class="flex items-center gap-3 px-5 py-3 rounded-full bg-[#0f1629]/90 backdrop-blur-xl border border-[var(--accent)] shadow-[0_12px_35px_rgba(0,0,0,0.65)] text-xs sm:text-sm font-medium text-white">
+      <svg class="w-4 h-4 accent-bright-text shrink-0" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1L14.7 9.3L23 12L14.7 14.7L12 23L9.3 14.7L1 12L9.3 9.3L12 1Z" />
+      </svg>
+      <span id="toast-message">Copied @appledrumstick to clipboard!</span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       INTERACTIVE ENGINE: SCROLL-SPY, SPOTLIGHT, 3D TILT & PARTICLE CANVAS
+       ========================================================================== -->
+  <script>
+    (function () {
+      /* ----------------------------------------------------------------------
+1. FLOATING NAVBAR SLIDING ACTIVE PILL INDICATOR + SCROLL SPY
+         ---------------------------------------------------------------------- */
+      const navMenu = document.getElementById('nav-menu');
+      const navIndicator = document.getElementById('nav-indicator');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      const sectionIds = ['about', 'skills', 'works', 'socials'];
+
+      let currentActiveId = 'about';
+      let isManualScrolling = false;
+      let manualScrollTimer = null;
+
+      function positionNavIndicator(targetLink) {
+        if (!navMenu || !navIndicator || !targetLink) return;
+        const width = targetLink.offsetWidth;
+        const left = targetLink.offsetLeft;
+        if (width === 0) return;
+
+        navIndicator.style.width = `${width}px`;
+        navIndicator.style.transform = `translateX(${left}px)`;
+      }
+
+      function setActiveNav(id) {
+        if (!sectionIds.includes(id)) id = 'about';
+        currentActiveId = id;
+
+        let activeDesktopLink = null;
+        navLinks.forEach((link) => {
+          const isMatch = link.getAttribute('data-nav') === id;
+          link.classList.toggle('active', isMatch);
+          if (isMatch) {
+            activeDesktopLink = link;
+            link.classList.remove('text-[#9aa4bf]');
+            link.classList.add('text-[#f4f6fb]');
+          } else {
+            link.classList.add('text-[#9aa4bf]');
+            link.classList.remove('text-[#f4f6fb]');
+          }
+        });
+
+        mobileNavLinks.forEach((link) => {
+          const isMatch = link.getAttribute('data-mobile-nav') === id;
+          link.classList.toggle('text-[#ffe6a3]', isMatch);
+          link.classList.toggle('bg-white/10', isMatch);
+          link.classList.toggle('text-[#9aa4bf]', !isMatch);
+        });
+
+        if (activeDesktopLink) {
+          positionNavIndicator(activeDesktopLink);
+        }
+      }
+
+      function syncActivePillPosition() {
+        const activeLink = document.querySelector(`.nav-link[data-nav="${currentActiveId}"]`) || navLinks[0];
+        if (activeLink) positionNavIndicator(activeLink);
+      }
+
+      setActiveNav('about');
+      requestAnimationFrame(syncActivePillPosition);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncActivePillPosition);
+      }
+      window.addEventListener('load', syncActivePillPosition);
+      window.addEventListener('resize', syncActivePillPosition);
+
+      function navigateToSection(targetId) {
+        setActiveNav(targetId);
+
+        const targetEl = document.getElementById(targetId);
+        if (!targetEl) return;
+
+        if (targetEl.classList.contains('reveal-up')) {
+          revealElement(targetEl);
+        }
+        targetEl.querySelectorAll('.reveal-up').forEach((el) => {
+          revealElement(el);
+        });
+
+        isManualScrolling = true;
+        clearTimeout(manualScrollTimer);
+        manualScrollTimer = setTimeout(() => {
+          isManualScrolling = false;
+        }, 900);
+
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      document.querySelectorAll('.nav-link, .mobile-nav-link, [data-jump]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (!href || !href.startsWith('#')) return;
+          const targetId = href.slice(1);
+          if (document.getElementById(targetId)) {
+            e.preventDefault();
+            navigateToSection(targetId);
+          }
+        });
+      });
+
+      function updateScrollSpy() {
+        if (isManualScrolling) return;
+
+        const isScrollable = document.documentElement.scrollHeight > window.innerHeight + 60;
+        const isAtBottom =
+          isScrollable &&
+          window.scrollY > 80 &&
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+
+        if (isAtBottom) {
+          if (currentActiveId !== 'socials') setActiveNav('socials');
+          return;
+        }
+
+        let matchedId = 'about';
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+          const id = sectionIds[i];
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= 180) {
+            matchedId = id;
+            break;
+          }
+        }
+
+        if (matchedId !== currentActiveId) {
+          setActiveNav(matchedId);
+        }
+      }
+
+      window.addEventListener('scroll', updateScrollSpy, { passive: true });
+
+      const brandLogoLink = document.getElementById('brand-logo-link');
+      if (brandLogoLink) {
+        brandLogoLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateToSection('about');
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+2. ELEMENTAL RESONANCE THEME SWITCHER
+         ---------------------------------------------------------------------- */
+      const themeButtons = document.querySelectorAll('[data-theme-btn]');
+      const elementColors = {
+        gold: [243, 208, 138],
+        hydro: [56, 189, 248],
+        electro: [192, 132, 252],
+        anemo: [52, 211, 153]
+      };
+      let activeRgb = elementColors.gold;
+
+      themeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const theme = btn.getAttribute('data-theme-btn');
+          document.body.setAttribute('data-element', theme);
+          activeRgb = elementColors[theme] || elementColors.gold;
+
+          themeButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const labels = {
+            gold: 'Celestial Gold Resonance active',
+            hydro: 'Hydro Cyan Resonance active',
+            electro: 'Electro Violet Resonance active',
+            anemo: 'Anemo Emerald Resonance active'
+          };
+          showToast(labels[theme]);
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+3. CURSOR-FOLLOWING SPOTLIGHT GLOW, 3D TILT & MAGNETIC CARDS
+         ---------------------------------------------------------------------- */
+      const bentoCards = document.querySelectorAll('.bento-card');
+      bentoCards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+
+      const tiltCards = document.querySelectorAll('[data-tilt]');
+      tiltCards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const relX = (e.clientX - rect.left) / rect.width - 0.5;
+          const relY = (e.clientY - rect.top) / rect.height - 0.5;
+          const rotateY = relX * 9;
+          const rotateX = -relY * 9;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+
+      const magneticItems = document.querySelectorAll('[data-magnetic]');
+      magneticItems.forEach((item) => {
+        item.addEventListener('mousemove', (e) => {
+          const rect = item.getBoundingClientRect();
+          const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.14;
+          const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.18;
+          item.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+        });
+
+        item.addEventListener('mouseleave', () => {
+          item.style.transform = '';
+        });
+      });
+
+      const charms = document.querySelectorAll('[data-parallax]');
+      window.addEventListener(
+        'mousemove',
+        (e) => {
+          const cx = e.clientX - window.innerWidth / 2;
+          const cy = e.clientY - window.innerHeight / 2;
+          charms.forEach((charm) => {
+            const factor = parseFloat(charm.getAttribute('data-parallax')) || 0.02;
+            charm.style.transform = `translate3d(${(cx * factor).toFixed(1)}px, ${(cy * factor).toFixed(1)}px, 0)`;
+          });
+        },
+        { passive: true }
+      );
+
+      /* ----------------------------------------------------------------------
+4. INTERACTIVE WORK FILTERING, DETAIL MODAL & GENSHIN WISH SAMPLE SLIDER
+         ---------------------------------------------------------------------- */
+      const filterPills = document.querySelectorAll('.filter-pill');
+      const workItems = document.querySelectorAll('.work-item');
+
+      filterPills.forEach((pill) => {
+        pill.addEventListener('click', () => {
+          const filter = pill.getAttribute('data-filter');
+
+          filterPills.forEach((p) => {
+            p.classList.remove('text-white', 'active-filter');
+            p.classList.add('text-[#9aa4bf]');
+          });
+          pill.classList.add('text-white', 'active-filter');
+          pill.classList.remove('text-[#9aa4bf]');
+
+          workItems.forEach((item) => {
+            const cat = item.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              item.classList.remove('is-hidden');
+            } else {
+              item.classList.add('is-hidden');
+            }
+          });
+        });
+      });
+
+      /* PUT YOUR SAMPLE WORK IMAGE & VIDEO FILENAMES HERE (keep them in the same folder as index.html) */
+      const projectsData = [
+        {
+          category: 'Graphic Design',
+          title: 'Pubmats & Social Media Graphics',
+          subtitle: 'BSIT 1-F3 & Brand Campaigns • @appledrumstick',
+          description:
+            'High-impact publication materials, BSIT 1-F3 announcements, and branded social media carousels crafted with balanced visual hierarchy, custom lighting effects, and crisp typography.',
+          tools: ['Adobe Photoshop', 'Adobe Illustrator', 'Typography', 'Color Grading'],
+          samples: [
+            { image: 'back 2 school final ver_.jpg', caption: 'BSIT 1-F3 Official Section Pubmat' },
+            { image: 'Y8.jpg', caption: 'Promotional Event & Social Media Graphic' }
+          ]
+        },
+        {
+          category: 'Graphic Design',
+          title: 'Event Certificates & Tarpaulins',
+          subtitle: 'Custom Large-Format Print Layouts',
+          description:
+            'Bespoke digital and print-ready event invitations and high-resolution graduation tarpaulins engineered for crisp large-format printing, featuring custom emblems, clean photo retouching, and bleed-safe layouts.',
+          tools: ['Adobe Photoshop', 'Adobe Illustrator', '300 DPI Print Prep', 'Layout Design'],
+          samples: [
+            { image: 'PTA TARPAPEL.jpg', caption: 'Custom Graduation Tarpaulin Layout' },
+            { image: '14.jpg', caption: 'Formal Event Invitation Design' }
+          ]
+        },
+        {
+          category: 'Graphic Design',
+          title: 'Logo & Institutional Seal Design',
+          subtitle: 'Vector Identity & Symbolic Branding',
+          description:
+            'Clean, scalable vector logos and institutional emblems constructed with geometric precision, symbolic crests, and versatile monochrome/full-color variants for student organizations and local brands.',
+          tools: ['Adobe Illustrator', 'Vector Geometry', 'Brand Identity', 'SVG Export'],
+          samples: [
+            { image: 'off logo 123 ver 1.png', caption: 'Official Seal & Emblem Vector Design' },
+            { image: 'RATING 7.jpg', caption: 'Brand Monogram & Identity Mark' }
+          ]
+        },
+        {
+          category: 'Video & Motion',
+          title: 'Video Editing & Motion Highlights',
+          subtitle: 'Premiere Pro, After Effects & CapCut',
+          description:
+            'Engaging event highlight reels, promotional videos, and rhythmic short-form edits combining seamless pacing, kinetic typography, audio beat-syncing, and custom keyframe transitions.',
+          tools: ['Adobe Premiere Pro', 'Adobe After Effects', 'CapCut', 'Sound Sync'],
+          samples: [
+            { video: 'Video Project 2.mp4', caption: 'After Effects Motion & Keyframe Sequence' },
+            { video: 'Video Project 3.mp4', caption: 'Event Highlight Reel & Color Grade' }
+          ]
+        }
+      ];
+
+      const modal = document.getElementById('project-modal');
+      const modalCategory = document.getElementById('modal-category');
+      const modalTitle = document.getElementById('modal-title');
+      const modalSubtitle = document.getElementById('modal-subtitle');
+      const modalDescription = document.getElementById('modal-description');
+      const modalTools = document.getElementById('modal-tools');
+      const modalCloseBtn = document.getElementById('modal-close-btn');
+      const modalCloseBtnDesktop = document.getElementById('modal-close-btn-desktop');
+      const modalDismissBtn = document.getElementById('modal-dismiss-btn');
+      const modalRequestBtn = document.getElementById('modal-request-btn');
+
+      // Wish Sample Showcase Elements
+      const wishCounterBadge = document.getElementById('wish-counter-badge');
+      const wishIntroState = document.getElementById('wish-intro-state');
+      const wishSampleStage = document.getElementById('wish-sample-stage');
+      const wishRevealBtn = document.getElementById('wish-reveal-btn');
+      const wishNextBtn = document.getElementById('wish-next-btn');
+      const wishMeteor = document.getElementById('wish-meteor');
+      const wishFlash = document.getElementById('wish-flash');
+      const sampleSlideFrame = document.getElementById('sample-slide-frame');
+      const sampleImage = document.getElementById('sample-image');
+      const sampleVideo = document.getElementById('sample-video');
+      const sampleMissingBox = document.getElementById('sample-missing-box');
+      const sampleMissingHint = document.getElementById('sample-missing-hint');
+      const sampleCaption = document.getElementById('sample-caption');
+      const sampleDots = document.getElementById('sample-dots');
+      const samplePrevBtn = document.getElementById('sample-prev-btn');
+      const sampleNextBtn = document.getElementById('sample-next-btn');
+
+      let activeProjectIndex = 0;
+      let activeSampleIndex = 0;
+
+      function stopSampleVideo() {
+        if (sampleVideo) {
+          sampleVideo.pause();
+          sampleVideo.removeAttribute('src');
+          sampleVideo.load();
+        }
+      }
+
+      function playWishSlideAnimation() {
+        if (wishMeteor) {
+          wishMeteor.classList.remove('wish-meteor-active');
+          void wishMeteor.offsetWidth;
+          wishMeteor.classList.add('wish-meteor-active');
+        }
+        if (wishFlash) {
+          wishFlash.classList.remove('wish-flash-active');
+          void wishFlash.offsetWidth;
+          wishFlash.classList.add('wish-flash-active');
+        }
+        if (sampleSlideFrame) {
+          sampleSlideFrame.classList.remove('sample-slide-enter');
+          void sampleSlideFrame.offsetWidth;
+          sampleSlideFrame.classList.add('sample-slide-enter');
+        }
+      }
+
+      function renderSampleSlide(withWishEffect) {
+        const project = projectsData[activeProjectIndex];
+        if (!project || !project.samples || project.samples.length === 0) return;
+
+        const total = project.samples.length;
+        activeSampleIndex = ((activeSampleIndex % total) + total) % total;
+        const currentSample = project.samples[activeSampleIndex];
+
+        wishIntroState.classList.add('hidden');
+        wishSampleStage.classList.remove('hidden');
+        wishCounterBadge.textContent = `${activeSampleIndex + 1} / ${total}`;
+
+        // Reset media & missing-file fallback state
+        sampleMissingBox.classList.add('hidden');
+        stopSampleVideo();
+
+        const mediaSrc = currentSample.video || currentSample.image || '';
+        const isVideo = Boolean(currentSample.video) || /\.(mp4|webm|ogg|mov)$/i.test(mediaSrc);
+
+        if (isVideo && sampleVideo) {
+          sampleImage.classList.add('hidden');
+          sampleVideo.classList.remove('hidden');
+          sampleVideo.onerror = () => {
+            sampleVideo.classList.add('hidden');
+            sampleMissingBox.classList.remove('hidden');
+            sampleMissingHint.textContent = `Add "${mediaSrc}" in your portfolio folder (or update its filename in projectsData).`;
+          };
+          sampleVideo.src = mediaSrc;
+        } else {
+          if (sampleVideo) sampleVideo.classList.add('hidden');
+          sampleImage.classList.remove('hidden');
+          sampleImage.onerror = () => {
+            sampleImage.classList.add('hidden');
+            sampleMissingBox.classList.remove('hidden');
+            sampleMissingHint.textContent = `Add "${mediaSrc}" in your portfolio folder (or update its filename in projectsData).`;
+          };
+          sampleImage.src = mediaSrc;
+          sampleImage.alt = currentSample.caption;
+        }
+
+        sampleCaption.textContent = currentSample.caption;
+
+        // Update indicator dots
+        sampleDots.innerHTML = '';
+        project.samples.forEach((_, dotIdx) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.setAttribute('aria-label', `View sample ${dotIdx + 1}`);
+          dot.className =
+            dotIdx === activeSampleIndex
+              ? 'w-4 h-1.5 rounded-full bg-[var(--accent-bright)] transition-all cursor-pointer'
+              : 'w-1.5 h-1.5 rounded-full bg-white/25 hover:bg-white/50 transition-all cursor-pointer';
+          dot.addEventListener('click', () => {
+            activeSampleIndex = dotIdx;
+            renderSampleSlide(true);
+          });
+          sampleDots.appendChild(dot);
+        });
+
+        if (withWishEffect) {
+          playWishSlideAnimation();
+        }
+      }
+
+      function openProjectModal(index) {
+        const project = projectsData[index];
+        if (!project) return;
+        activeProjectIndex = index;
+        activeSampleIndex = 0;
+
+        stopSampleVideo();
+
+        modalCategory.textContent = project.category;
+        modalTitle.textContent = project.title;
+        modalSubtitle.textContent = project.subtitle;
+        modalDescription.textContent = project.description;
+
+        modalTools.innerHTML = '';
+        project.tools.forEach((tool) => {
+          const span = document.createElement('span');
+          span.className = 'font-mono-tag text-[11px] px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f4f6fb]';
+          span.textContent = tool;
+          modalTools.appendChild(span);
+        });
+
+        // Reset Wish Showcase back to the pre-wish banner every time a project is opened
+        wishIntroState.classList.remove('hidden');
+        wishSampleStage.classList.add('hidden');
+        const sampleCount = project.samples ? project.samples.length : 0;
+        wishCounterBadge.textContent = `${sampleCount} Sample${sampleCount === 1 ? '' : 's'}`;
+
+        modal.classList.add('open');
+      }
+
+      function closeProjectModal() {
+        stopSampleVideo();
+        modal.classList.remove('open');
+      }
+
+      if (wishRevealBtn) {
+        wishRevealBtn.addEventListener('click', (e) => {
+          const rect = wishRevealBtn.getBoundingClientRect();
+          spawnStarBurst(e.clientX || rect.left + rect.width / 2, e.clientY || rect.top + rect.height / 2);
+          activeSampleIndex = 0;
+          renderSampleSlide(true);
+        });
+      }
+
+      if (wishNextBtn) {
+        wishNextBtn.addEventListener('click', (e) => {
+          const rect = wishNextBtn.getBoundingClientRect();
+          spawnStarBurst(e.clientX || rect.left + rect.width / 2, e.clientY || rect.top + rect.height / 2);
+          activeSampleIndex += 1;
+          renderSampleSlide(true);
+        });
+      }
+
+      if (samplePrevBtn) {
+        samplePrevBtn.addEventListener('click', () => {
+          activeSampleIndex -= 1;
+          renderSampleSlide(true);
+        });
+      }
+
+      if (sampleNextBtn) {
+        sampleNextBtn.addEventListener('click', () => {
+          activeSampleIndex += 1;
+          renderSampleSlide(true);
+        });
+      }
+
+      workItems.forEach((card) => {
+        const openHandler = () => {
+          const idx = parseInt(card.getAttribute('data-project-id'), 10);
+          openProjectModal(idx);
+        };
+        card.addEventListener('click', openHandler);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openHandler();
+          }
+        });
+      });
+
+      modalCloseBtn.addEventListener('click', closeProjectModal);
+      if (modalCloseBtnDesktop) modalCloseBtnDesktop.addEventListener('click', closeProjectModal);
+      modalDismissBtn.addEventListener('click', closeProjectModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeProjectModal();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closeProjectModal();
+        }
+      });
+
+      modalRequestBtn.addEventListener('click', () => {
+        closeProjectModal();
+        navigateToSection('socials');
+        setTimeout(() => {
+          showToast('Reach out via @appledrumstick to start your commission!');
+        }, 450);
+      });
+
+      /* ----------------------------------------------------------------------
+5. COPY HANDLE BUTTON + STAR-BURST PARTICLE POP + TOAST NOTIFICATION
+         ---------------------------------------------------------------------- */
+      const copyBtn = document.getElementById('copy-handle-btn');
+      const commissionCardBtn = document.getElementById('commission-card-btn');
+      const toastEl = document.getElementById('toast-notification');
+      const toastMsgEl = document.getElementById('toast-message');
+      let toastTimer;
+
+      function showToast(msg) {
+        toastMsgEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 2800);
+      }
+
+      function spawnStarBurst(x, y) {
+        const count = 10;
+        for (let i = 0; i < count; i++) {
+          const star = document.createElement('div');
+          star.className = 'burst-star';
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+          const dist = 42 + Math.random() * 44;
+          star.style.left = `${x - 7}px`;
+          star.style.top = `${y - 7}px`;
+          star.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+          star.style.setProperty('--ty', `${Math.sin(angle) * dist}px`);
+          star.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="rgb(${activeRgb.join(',')})"><path d="M12 1L14.7 9.3L23 12L14.7 14.7L12 23L9.3 14.7L1 12L9.3 9.3L12 1Z"/></svg>`;
+          document.body.appendChild(star);
+          setTimeout(() => star.remove(), 900);
+        }
+      }
+
+      function copyCreatorHandle(e, triggerEl, customToast) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('@appledrumstick').catch(() => {});
+        } else {
+          const temp = document.createElement('textarea');
+          temp.value = '@appledrumstick';
+          temp.style.position = 'fixed';
+          temp.style.opacity = '0';
+          document.body.appendChild(temp);
+          temp.select();
+          try {
+            document.execCommand('copy');
+          } catch (_) {}
+          document.body.removeChild(temp);
+        }
+
+        const rect = triggerEl.getBoundingClientRect();
+        const originX = (e && e.clientX) || rect.left + rect.width / 2;
+        const originY = (e && e.clientY) || rect.top + rect.height / 2;
+        spawnStarBurst(originX, originY);
+        showToast(customToast || 'Copied @appledrumstick to clipboard!');
+      }
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', (e) => {
+          copyCreatorHandle(e, copyBtn, 'Copied @appledrumstick to clipboard!');
+        });
+      }
+
+      if (commissionCardBtn) {
+        commissionCardBtn.addEventListener('click', (e) => {
+          copyCreatorHandle(
+            e,
+            commissionCardBtn,
+            'Copied @appledrumstick — DM on TikTok, Instagram, or Facebook!'
+          );
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+6. CONTENT CARD SCROLL REVEAL & SKILL BAR ANIMATION
+         ---------------------------------------------------------------------- */
+      const revealEls = document.querySelectorAll('.reveal-up');
+
+      function revealElement(el) {
+        el.classList.add('is-visible');
+        const bar = el.querySelector('.skill-bar-fill');
+        if (bar) {
+          const targetW = bar.style.getPropertyValue('--target-width') || '85%';
+          requestAnimationFrame(() => {
+            bar.style.width = targetW;
+          });
+        }
+      }
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              revealElement(entry.target);
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.05 }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      setTimeout(() => {
+        revealEls.forEach((el) => revealElement(el));
+      }, 900);
+
+      /* ----------------------------------------------------------------------
+7. 60FPS CELESTIAL PARTICLE CANVAS BACKGROUND
+         ---------------------------------------------------------------------- */
+      const canvas = document.getElementById('celestial-canvas');
+      const ctx = canvas.getContext('2d');
+      let width = 0;
+      let height = 0;
+      let particles = [];
+      const pointer = { x: -9999, y: -9999 };
+
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function initParticles() {
+        const count = Math.min(58, Math.max(24, Math.floor((width * height) / 26000)));
+        particles = Array.from({ length: count }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.28,
+          vy: -0.12 - Math.random() * 0.32,
+          size: 1.1 + Math.random() * 2.1,
+          isDiamond: Math.random() > 0.65,
+          phase: Math.random() * Math.PI * 2
+        }));
+      }
+
+      window.addEventListener(
+        'mousemove',
+        (e) => {
+          pointer.x = e.clientX;
+          pointer.y = e.clientY;
+        },
+        { passive: true }
+      );
+
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        initParticles();
+      });
+
+      function animateParticles(time) {
+        ctx.clearRect(0, 0, width, height);
+        const [r, g, b] = activeRgb;
+
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          const dx = p.x - pointer.x;
+          const dy = p.y - pointer.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 110 && dist > 0) {
+            const force = (110 - dist) / 110;
+            p.x += (dx / dist) * force * 1.4;
+            p.y += (dy / dist) * force * 1.4;
+          }
+
+          if (p.y < -12) {
+            p.y = height + 12;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -12) p.x = width + 12;
+          if (p.x > width + 12) p.x = -12;
+
+          const alpha = 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(time * 0.002 + p.phase));
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`;
+
+          if (p.isDiamond) {
+            ctx.beginPath();
+            const s = p.size * 1.65;
+            ctx.moveTo(p.x, p.y - s);
+            ctx.lineTo(p.x + s * 0.65, p.y);
+            ctx.lineTo(p.x, p.y + s);
+            ctx.lineTo(p.x - s * 0.65, p.y);
+            ctx.closePath();
+            ctx.fill();
+          } else {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      resizeCanvas();
+      initParticles();
+      requestAnimationFrame(animateParticles);
+    })();
+  </script>
+</body>
+</html>
